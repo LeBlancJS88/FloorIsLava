@@ -6176,6 +6176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc5f5679ad0cfb48866549a91c63541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMusic: {fileID: 8300000, guid: 5c5248671c3c50349b4b1316ebdd5e33, type: 3}
+  gameOverMusic: {fileID: 0}
+  victoryMusic: {fileID: 8300000, guid: ac30545ec37a48c408812d531df45379, type: 3}
+  uiManager: {fileID: 1816555856}
 --- !u!82 &154799753
 AudioSource:
   m_ObjectHideFlags: 0
@@ -71581,7 +71585,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3038
+  m_Name: pb_Mesh-3662
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -85543,7 +85547,7 @@ PrefabInstance:
       objectReference: {fileID: 1678268371}
     - target: {fileID: 8476738909518765091, guid: d5fb81208d7481f4384fbf22af675321, type: 3}
       propertyPath: m_VersionIndex
-      value: 14
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8609897173528387412, guid: d5fb81208d7481f4384fbf22af675321, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -11,19 +11,23 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text bestTimeText;
-    [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private GameObject victoryPanel;
+    [SerializeField] internal GameObject gameOverPanel;
+    [SerializeField] internal GameObject victoryPanel;
     [SerializeField] private Button restartButton;
 
-    private float startTime;
+    private bool timeRunning;
     private float currentTime;
     private float bestTime;
 
     private void Start()
     {
         livesText.text = "Lives: " + ballController.lifeCount.ToString();
-        startTime = Time.time;  // set start time
+        timeRunning = true;
+        currentTime = 0f;  // set start time
         bestTime = PlayerPrefs.GetFloat("BestTime", 0);  // get best time from PlayerPrefs (if any)
+        if (bestTime > 60 * 60 * 24)
+            bestTime = 0f;
+        bestTimeText.text = "Best Time: " + bestTime.ToString("F2");
 
         // set up restart button
         if (restartButton != null)
@@ -35,7 +39,8 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // update time text
-        currentTime = Time.time - startTime;
+        if (timeRunning)
+            currentTime += Time.deltaTime;
         timeText.text = "Time: " + currentTime.ToString("F2");
     }
 
@@ -48,6 +53,7 @@ public class UIManager : MonoBehaviour
         {
             // show game over panel
             gameOverPanel.SetActive(true);
+            timeRunning = false;
         }
     }
 

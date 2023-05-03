@@ -10,6 +10,7 @@ public class MusicController : MonoBehaviour
 
     private AudioSource audioSource;
 
+    [SerializeField] private UIManager uiManager;
     private bool isGameOver;
     private bool isVictory;
 
@@ -27,7 +28,7 @@ public class MusicController : MonoBehaviour
     private void Update()
     {
         // Check if the player has run out of lives and the GameOver panel appears
-        if (!isGameOver && !isVictory && FindObjectOfType<GameOverPanel>() != null)
+        if (!isGameOver && !isVictory && uiManager.gameOverPanel.activeSelf)
         {
             isGameOver = true;
 
@@ -38,7 +39,7 @@ public class MusicController : MonoBehaviour
             audioSource.Play();
         }
         // Check if the player has reached the Goal and the victory panel appears
-        else if (!isGameOver && !isVictory && FindObjectOfType<VictoryPanel>() != null)
+        else if (!isGameOver && !isVictory && uiManager.victoryPanel.activeSelf)
         {
             isVictory = true;
 
