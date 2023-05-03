@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
         bestTime = PlayerPrefs.GetFloat("BestTime", 0);  // get best time from PlayerPrefs (if any)
         if (bestTime > 60 * 60 * 24)
             bestTime = 0f;
+
+        if (bestTime < 0) bestTime = 0f;
         bestTimeText.text = "Best Time: " + bestTime.ToString("F2");
 
         // set up restart button
