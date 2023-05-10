@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-    namespace AD1020
-{
+
 public class SetVolume : MonoBehaviour
 {
         public AudioMixer mixer;
@@ -29,4 +28,3 @@ public class SetVolume : MonoBehaviour
             mixer.SetFloat("BoardGameSpeechVol", Mathf.Log10(sliderValue) * 20);
         }
     }
-}

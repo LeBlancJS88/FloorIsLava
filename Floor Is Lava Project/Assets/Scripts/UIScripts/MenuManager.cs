@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AD1020
-{
-
 public class MenuManager : MonoBehaviour
 {
         public GameObject optionsMenu;
@@ -17,5 +14,4 @@ public class MenuManager : MonoBehaviour
             optionsMenu.SetActive(!optionsMenu.gameObject.activeSelf);
         }
     }
-}
 }

@@ -14,6 +14,13 @@ TagManager:
   - Lighting
   - Backdrop
   - Pipes
+  - CanvasPanels
+  - Trigger1
+  - Trigger2
+  - Trigger3
+  - Trigger4
+  - Trigger5
+  - Trigger6
   layers:
   - Default
   - TransparentFX
