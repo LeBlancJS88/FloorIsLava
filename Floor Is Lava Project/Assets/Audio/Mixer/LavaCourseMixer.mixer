@@ -78,13 +78,13 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 26630d2e13090df4381bedb1e9a864f5
-    name: MyExposedParam
+    name: LavaCourseAmbientVol
   - guid: 4673071aeed4a0e41b60d13c53db4779
-    name: MyExposedParam 3
+    name: LavaCourseMasterVol
   - guid: b6641423f98ae8842a6d1e1aa5eaa5b3
-    name: MyExposedParam 2
+    name: LavaCourseMusicVol
   - guid: 8d865299989a2ad40b9d2f3a79d60319
-    name: MyExposedParam 1
+    name: LavaCourseSFXVol
   m_AudioMixerGroupViews:
   - guids:
     - 86109b1e887e48c43b7b62a18102a3a1
@@ -147,7 +147,7 @@ AudioMixerSnapshotController:
     a55801b24ec9af243bbc2022ee5e9e98: -25.2
     4eb24ad2c0b7ef44c9e16da5ed8b8bbb: 100
     355b0d134a1919947b076b24067a04af: 10
-    b6641423f98ae8842a6d1e1aa5eaa5b3: -5
+    b6641423f98ae8842a6d1e1aa5eaa5b3: -8.442315
     d6d3807315a7eb048b2a624de11425bc: 0.752
     f9383f9407d234d48922c30f2f4d88e1: 22000
     6fdf3335fe78ba04c9ab50566bf2979b: 0
@@ -169,7 +169,7 @@ AudioMixerSnapshotController:
     6a1c3d6c5a4de224c8e2f98cac180ea5: 1
     5257729dac338924faaa3817a11967b2: -500
     bddde0bd636bdbc44b247b3718fbdd92: 0.3
-    26630d2e13090df4381bedb1e9a864f5: -1
+    26630d2e13090df4381bedb1e9a864f5: -9.9
     b2cc134e96dfc5c44a78c9b22b43c466: 0
     0878b19e47b99b649ae248cabd51bfd5: 0
     9e6ac12fed991814e95250bfc563e1ae: 0
