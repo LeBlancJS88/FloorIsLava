@@ -21,6 +21,7 @@ TagManager:
   - Trigger4
   - Trigger5
   - Trigger6
+  - PostProcessing
   layers:
   - Default
   - TransparentFX
@@ -31,8 +32,8 @@ TagManager:
   - BackgroundProps
   - Lighting
   - ParticleEffects
-  - 
-  - 
+  - Camera
+  - Player
   - 
   - 
   - 

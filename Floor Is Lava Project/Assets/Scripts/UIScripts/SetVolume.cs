@@ -10,21 +10,21 @@ public class SetVolume : MonoBehaviour
 
         public void MasterLevel (float sliderValue)
         {
-            mixer.SetFloat("BoardGameMasterVol", Mathf.Log10(sliderValue) * 20);
+            mixer.SetFloat("LavaCourseMasterVol", Mathf.Log10(sliderValue) * 20);
         }
 
         public void MusicLevel(float sliderValue)
         {
-            mixer.SetFloat("BoardGameMusicVol", Mathf.Log10(sliderValue) * 20);
+            mixer.SetFloat("LavaCourseMusicVol", Mathf.Log10(sliderValue) * 20);
         }
 
         public void SFXLevel(float sliderValue)
         {
-            mixer.SetFloat("BoardGameSFXVol", Mathf.Log10(sliderValue) * 20);
+            mixer.SetFloat("LavaCourseSFXVol", Mathf.Log10(sliderValue) * 20);
         }
 
         public void SpeechLevel(float sliderValue)
         {
-            mixer.SetFloat("BoardGameSpeechVol", Mathf.Log10(sliderValue) * 20);
+            mixer.SetFloat("LavaCourseAmbientVol", Mathf.Log10(sliderValue) * 20);
         }
     }
