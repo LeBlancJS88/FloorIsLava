@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text bestTimeText;
+    [SerializeField] private TMP_Text victoryPanelPlayTime;
+    [SerializeField] private TMP_Text victoryPanelBestTime;
     [SerializeField] internal GameObject gameOverPanel;
     [SerializeField] internal GameObject victoryPanel;
     [SerializeField] private Button restartButton;
@@ -69,15 +70,18 @@ public class UIManager : MonoBehaviour
     public void QuitGame()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
+        EditorApplication.isPlaying = false;
 #endif
+        Application.Quit();
     }
 
     public void ActivateVictoryPanel()
     {
         victoryPanel.SetActive(true);
+        victoryPanelPlayTime.text = "Your Time: " + currentTime.ToString("F2") + " seconds.";
+        victoryPanelBestTime.text = "Best Time: " + bestTime.ToString("F2") + " seconds.";
+
+
     }
 
     public void SetBestTime()
