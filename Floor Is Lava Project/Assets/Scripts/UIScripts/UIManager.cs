@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text bestTimeText;
+    [SerializeField] internal TMP_Text scoreText;
     [SerializeField] private TMP_Text victoryPanelPlayTime;
     [SerializeField] private TMP_Text victoryPanelBestTime;
     [SerializeField] internal GameObject gameOverPanel;
@@ -19,9 +20,13 @@ public class UIManager : MonoBehaviour
     internal bool timeRunning;
     private float currentTime;
     private float bestTime;
+    internal float score;
+    internal float scoreMultiplier;
 
     private void Start()
     {
+        scoreMultiplier = 1;
+
         livesText.text = "Lives: " + ballController.lifeCount.ToString();
         timeRunning = true;
         currentTime = 0f;  // set start time
@@ -45,6 +50,8 @@ public class UIManager : MonoBehaviour
         if (timeRunning)
             currentTime += Time.deltaTime;
         timeText.text = "Time: " + currentTime.ToString("F2");
+
+        scoreText.text = "Score: " + (score * scoreMultiplier).ToString();
     }
 
     public void LoseLife()

@@ -22,6 +22,8 @@ TagManager:
   - Trigger5
   - Trigger6
   - PostProcessing
+  - Bolt
+  - Nut
   layers:
   - Default
   - TransparentFX
