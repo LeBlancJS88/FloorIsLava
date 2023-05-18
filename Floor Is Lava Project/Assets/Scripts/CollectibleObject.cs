@@ -11,7 +11,7 @@ public class CollectibleObject : MonoBehaviour
 
     private void Start()
     {
-        // Get the UIManager component
+
         uiManager = FindObjectOfType<UIManager>();
 
         // Enable the object on scene start
@@ -37,7 +37,7 @@ public class CollectibleObject : MonoBehaviour
             if (gameObject.CompareTag("Bolt"))
             {
                 // Add 10 to the Score variable
-                uiManager.score += 10;
+                uiManager.UpdateScore(uiManager.score + 10);
             }
             else if (gameObject.CompareTag("Nut"))
             {

@@ -7,6 +7,7 @@ public class BallController : MonoBehaviour
 
     public int lifeCount = 3;
     public float speed = 5f;
+    public float rotationSpeed = 5f;
     private Rigidbody rigidBody;
 
     public UIManager uiManager;
@@ -57,6 +58,18 @@ public class BallController : MonoBehaviour
         else if (Input.GetAxis("Vertical") < 0)
         {
             rigidBody.AddForce(-Vector3.forward * speed);
+        }
+
+        Vector3 velocity = rigidBody.velocity;
+        velocity.y = 0f; // Ignore vertical velocity
+
+        if (velocity.magnitude > 0.1f) // Check if velocity is above a certain threshold
+        {
+            Vector3 rotationAxis = Vector3.Cross(Vector3.up, velocity.normalized); // Calculate rotation axis using cross product
+            Quaternion targetRotation = Quaternion.LookRotation(velocity); // Calculate target rotation based on velocity
+
+            Quaternion rotation = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotationAxis) * rigidBody.rotation; // Rotate the ball around the rotation axis
+            rigidBody.MoveRotation(rotation); // Apply the rotation to the rigidbody
         }
     }
 
