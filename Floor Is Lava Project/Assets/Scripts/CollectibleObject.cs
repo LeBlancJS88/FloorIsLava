@@ -37,12 +37,12 @@ public class CollectibleObject : MonoBehaviour
             if (gameObject.CompareTag("Bolt"))
             {
                 // Add 10 to the Score variable
-                uiManager.UpdateScore(uiManager.score + 10);
+                uiManager.UpdateScore(10, 0);
             }
             else if (gameObject.CompareTag("Nut"))
             {
                 // Add 1 to the Score Multiplier variable
-                uiManager.scoreMultiplier += 1;
+                uiManager.UpdateScore(0, 1);
             }
 
             // Disable the object

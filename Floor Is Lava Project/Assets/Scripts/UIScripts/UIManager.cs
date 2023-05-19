@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,16 +18,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] internal GameObject gameOverPanel;
     [SerializeField] internal GameObject victoryPanel;
     [SerializeField] private Button restartButton;
+    [SerializeField] private float countDuration = 1f;
+    //[SerializeField] private float countSpeed = 1f;
+    [SerializeField] private float delayBeforeCounting = .5f;
 
     internal bool timeRunning;
     private float currentTime;
     private float bestTime;
     internal float score;
     internal float scoreMultiplier;
-
-    private bool isCounting;
-    private float countStartTime;
-    private float countDuration = 1f;
 
     private void Start()
     {
@@ -55,29 +55,6 @@ public class UIManager : MonoBehaviour
         if (timeRunning)
             currentTime += Time.deltaTime;
         timeText.text = "Time: " + currentTime.ToString("F2");
-
-        // perform counting when active
-        if (isCounting)
-        {
-            float elapsedTime = Time.time - countStartTime;
-
-            // check if counting is finished
-            if (elapsedTime >= countDuration)
-            {
-                isCounting = false;
-                scoreCountText.text = "Score: " + Mathf.RoundToInt(score).ToString();
-                scoreText.text = "Score: " + Mathf.RoundToInt(score - score).ToString();
-            }
-            else
-            {
-                // calculate the count value based on time elapsed
-                float countValue = Mathf.Lerp(0f, score, elapsedTime / countDuration);
-
-                // update the score count text
-                scoreCountText.text = "Score: " + Mathf.RoundToInt(countValue).ToString();
-                scoreText.text = "Score: " + Mathf.RoundToInt(score - countValue).ToString();
-            }
-        }
     }
 
     public void LoseLife()
@@ -122,13 +99,47 @@ public class UIManager : MonoBehaviour
         scoreCountText.gameObject.SetActive(true);
 
         // Start the counting process
-        isCounting = true;
-        countStartTime = Time.time;
+        StartCoroutine(CountingCoroutine());
     }
 
-    public void UpdateScore(float newScore)
+    private IEnumerator CountingCoroutine()
     {
-        score = newScore;
+        // First, wait .2 seconds
+        yield return new WaitForSeconds(delayBeforeCounting);
+
+        // Then do the counting
+        float scoreCounter;
+        float elapsedTime = 0f;
+        do
+        {
+            // Wait for next frame
+            yield return new WaitForEndOfFrame();
+
+            // Calculate values
+            elapsedTime += Time.deltaTime;
+
+
+            // Fixed time, speed varies
+            scoreCounter = score * (elapsedTime / countDuration);
+
+            // Fixed speed, time varies
+            //scoreCounter = elapsedTime * countSpeed;
+
+            // update the score count text
+            scoreCountText.text = "Score: " + Mathf.Round(scoreCounter).ToString();
+            scoreText.text = "Score: " + Mathf.Round((score * scoreMultiplier) - scoreCounter).ToString();
+        }
+        while (scoreCounter < score * scoreMultiplier);
+
+        scoreCountText.text = "Score: " + Mathf.Round(score * scoreMultiplier).ToString();
+        scoreText.text = "Score: " + Mathf.Round(score - score).ToString();
+
+    }
+
+    public void UpdateScore(float newScore, float newMultiplier)
+    {
+        score += newScore;
+        scoreMultiplier += newMultiplier;
         scoreText.text = "Score: " + (score * scoreMultiplier).ToString();
     }
 
