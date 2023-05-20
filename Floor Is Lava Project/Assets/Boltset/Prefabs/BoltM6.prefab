@@ -35,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 1073366157304108463}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &3300000
 MeshFilter:
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 5
+  ballController: {fileID: 2084486234857867581, guid: 4b9cc2598a8368a44a85b4912b224a57, type: 3}
 --- !u!1 &3711528188844231434
 GameObject:
   m_ObjectHideFlags: 0

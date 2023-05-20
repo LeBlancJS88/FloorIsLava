@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-
+    public AudioSource audioSource;
+    public AudioClip boltPickupSound;
+    public AudioClip nutPickupSound;
     public int lifeCount = 3;
     public float speed = 5f;
     public float rotationSpeed = 5f;
@@ -73,6 +75,23 @@ public class BallController : MonoBehaviour
         }
     }
 
+    public void PlayBoltPickupSound()
+    {
+        if (audioSource != null && boltPickupSound != null)
+        {
+            audioSource.clip = boltPickupSound;
+            audioSource.Play();
+        }
+    }
+
+    public void PlayNutPickupSound()
+    {
+        if (audioSource != null && nutPickupSound != null)
+        {
+            audioSource.clip = nutPickupSound;
+            audioSource.Play();
+        }
+    }
     internal void PlayerDeath(Vector3 deathPosition)
     {
         playerVisible.enabled = false;

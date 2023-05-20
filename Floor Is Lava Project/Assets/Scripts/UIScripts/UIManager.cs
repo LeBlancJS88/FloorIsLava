@@ -15,11 +15,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] internal TMP_Text scoreCountText;
     [SerializeField] private TMP_Text victoryPanelPlayTime;
     [SerializeField] private TMP_Text victoryPanelBestTime;
+    [SerializeField] private TMP_Text slowBonus;
+    [SerializeField] private TMP_Text timeBonus;
+    [SerializeField] private TMP_Text doubleTimeBonus;
+    [SerializeField] private TMP_Text tripleTimeBonus;
     [SerializeField] internal GameObject gameOverPanel;
     [SerializeField] internal GameObject victoryPanel;
     [SerializeField] private Button restartButton;
     [SerializeField] private float countDuration = 1f;
-    //[SerializeField] private float countSpeed = 1f;
     [SerializeField] private float delayBeforeCounting = .5f;
 
     internal bool timeRunning;
@@ -82,7 +85,7 @@ public class UIManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+    Application.Quit();
 #endif
     }
 
@@ -97,6 +100,24 @@ public class UIManager : MonoBehaviour
 
         // Enable the score count text
         scoreCountText.gameObject.SetActive(true);
+
+        // Enable bonus texts based on time
+        if (currentTime >= 150 && currentTime <= 180)
+        {
+            slowBonus.gameObject.SetActive(true);
+        }
+        else if (currentTime >= 120 && currentTime < 150)
+        {
+            timeBonus.gameObject.SetActive(true);
+        }
+        else if (currentTime >= 90 && currentTime < 120)
+        {
+            doubleTimeBonus.gameObject.SetActive(true);
+        }
+        else if (currentTime < 90)
+        {
+            tripleTimeBonus.gameObject.SetActive(true);
+        }
 
         // Start the counting process
         StartCoroutine(CountingCoroutine());
@@ -116,14 +137,11 @@ public class UIManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
             // Calculate values
-            elapsedTime += Time.deltaTime;
-
+            float countingSpeed = 5000f;
+            elapsedTime += Time.deltaTime * countingSpeed;
 
             // Fixed time, speed varies
             scoreCounter = score * (elapsedTime / countDuration);
-
-            // Fixed speed, time varies
-            //scoreCounter = elapsedTime * countSpeed;
 
             // update the score count text
             scoreCountText.text = "Score: " + Mathf.Round(scoreCounter).ToString();
@@ -134,6 +152,70 @@ public class UIManager : MonoBehaviour
         scoreCountText.text = "Score: " + Mathf.Round(score * scoreMultiplier).ToString();
         scoreText.text = "Score: " + Mathf.Round(score - score).ToString();
 
+        // Start the time countdown
+        StartCoroutine(TimeCountdownCoroutine());
+    }
+
+    private IEnumerator TimeCountdownCoroutine()
+    {
+        // Wait for a brief moment before starting the countdown
+        yield return new WaitForSeconds(0.5f);
+
+        // Calculate the base points per second
+        float basePointsPerSecond = 10f;
+
+        // Adjust the counting speed to control the rate (higher value = faster)
+        float countingSpeed = 10f;
+
+        // Check the time and add points accordingly
+        while (currentTime > 0)
+        {
+            float pointsPerSecond = basePointsPerSecond;
+
+            if (currentTime > 180)
+            {
+                // No points added if time is over 180 seconds
+                break;
+            }
+            else if (currentTime >= 150 && currentTime <= 180)
+            {
+                pointsPerSecond = 5f;
+            }
+            else if (currentTime >= 120 && currentTime < 150)
+            {
+                pointsPerSecond = 10f;
+            }
+            else if (currentTime >= 90 && currentTime < 120)
+            {
+                pointsPerSecond = 20f;
+            }
+            else if (currentTime < 90)
+            {
+                pointsPerSecond = 30f;
+            }
+
+            // Adjust the points per second using the counting speed
+            pointsPerSecond *= countingSpeed;
+
+            float pointsToAdd = pointsPerSecond * Time.deltaTime;
+            score += pointsToAdd;
+
+            // Update the score count text
+            scoreCountText.text = "Score: " + Mathf.Round(score).ToString();
+
+            currentTime -= (Time.deltaTime * countingSpeed);
+
+            // Ensure currentTime doesn't go below 0
+            if (currentTime < 0)
+            {
+                currentTime = 0;
+            }
+
+            yield return null;
+        }
+
+        // Set the final score
+        scoreCountText.text = "Score: " + Mathf.Round(score).ToString();
     }
 
     public void UpdateScore(float newScore, float newMultiplier)
