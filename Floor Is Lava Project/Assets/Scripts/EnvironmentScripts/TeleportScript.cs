@@ -9,6 +9,7 @@ public class TeleportScript : MonoBehaviour
     public GameObject particleEffect2; // Drag and drop the second particle effect object to this variable in the Inspector
 
     private bool playerIsInside = false;
+    private Coroutine disableParticleEffect2Coroutine;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,7 +32,7 @@ public class TeleportScript : MonoBehaviour
     private void EnableParticleEffect1()
     {
         particleEffect1.SetActive(true); // Enable particle effect 1 after 1 second delay
-        Invoke("TeleportPlayer", 1f); // Wait for another 1 second and then teleport the player
+        Invoke("TeleportPlayer", 2.2f); // Wait for another 2 seconds and then teleport the player
     }
 
     private void TeleportPlayer()
@@ -42,6 +43,22 @@ public class TeleportScript : MonoBehaviour
             player.transform.position = teleportDestination.position; // Teleport the player to the specified destination
             particleEffect1.SetActive(false); // Disable particle effect 1 after teleporting
             particleEffect2.SetActive(true); // Enable particle effect 2
+        }        // Disable particle effect 2 after 10 seconds
+
+        disableParticleEffect2Coroutine = StartCoroutine(DisableParticleEffect2AfterDelay(10f));
+    }
+    private IEnumerator DisableParticleEffect2AfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        particleEffect2.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        // Stop the coroutine if the script is destroyed (e.g., when the object is disabled or destroyed)
+        if (disableParticleEffect2Coroutine != null)
+        {
+            StopCoroutine(disableParticleEffect2Coroutine);
         }
     }
 }

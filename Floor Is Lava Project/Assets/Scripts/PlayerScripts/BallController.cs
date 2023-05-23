@@ -8,7 +8,7 @@ public class BallController : MonoBehaviour
     public AudioClip boltPickupSound;
     public AudioClip nutPickupSound;
     public int lifeCount = 3;
-    public float speed = 5f;
+    public float speed = 25f;
     public float rotationSpeed = 5f;
     private Rigidbody rigidBody;
 
@@ -19,11 +19,16 @@ public class BallController : MonoBehaviour
     public Transform CheckPoint;
     private MeshRenderer playerVisible;
 
+    private bool canMove = true; // Flag to control whether input should be processed or not
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = gameObject.GetComponent<Rigidbody>();
         playerVisible = GetComponent<MeshRenderer>();
+        canMove = true; // Enable input after respawn
+
+        ResetBallSpeed();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,23 +49,16 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Horizontal") > 0)
+        if (!canMove || uiManager.isVictoryPanelActive)
         {
-            rigidBody.AddForce(Vector3.right * speed);
-        }
-        else if (Input.GetAxis("Horizontal") < 0)
-        {
-            rigidBody.AddForce(-Vector3.right * speed);
+            return; // Skip movement code if canMove is false or victory panel is active
         }
 
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            rigidBody.AddForce(Vector3.forward * speed);
-        }
-        else if (Input.GetAxis("Vertical") < 0)
-        {
-            rigidBody.AddForce(-Vector3.forward * speed);
-        }
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * speed * Time.deltaTime;
+        rigidBody.AddForce(movement);
 
         Vector3 velocity = rigidBody.velocity;
         velocity.y = 0f; // Ignore vertical velocity
@@ -119,5 +117,14 @@ public class BallController : MonoBehaviour
         transform.position = CheckPoint.position;
 
         playerVisible.enabled = true;
+        canMove = true; // Enable input after respawn
+        ResetBallSpeed();
+
+    }
+
+    private void ResetBallSpeed()
+    {
+        rigidBody.velocity = Vector3.zero; // Reset the ball's velocity to zero
+        rigidBody.angularVelocity = Vector3.zero; // Reset the ball's angular velocity to zero
     }
 }

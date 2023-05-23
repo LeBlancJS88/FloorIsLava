@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float countDuration = 1f;
     [SerializeField] private float delayBeforeCounting = .5f;
 
+    public bool isVictoryPanelActive { get; private set; } = false;
+
     internal bool timeRunning;
     private float currentTime;
     private float bestTime;
@@ -92,6 +94,7 @@ public class UIManager : MonoBehaviour
     public void ActivateVictoryPanel()
     {
         victoryPanel.SetActive(true);
+        isVictoryPanelActive = true;
         victoryPanelPlayTime.text = "Your Time: " + currentTime.ToString("F2") + " seconds.";
         victoryPanelBestTime.text = "Best Time: " + bestTime.ToString("F2") + " seconds.";
 
